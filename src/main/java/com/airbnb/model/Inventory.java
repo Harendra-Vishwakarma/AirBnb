@@ -34,14 +34,18 @@ public class Inventory {
     @Column(name = "date",nullable = false)
     private LocalDate date;
 
-    @Column(name = "booked_count", columnDefinition = "INTEGER DEFAULT 0")
-    private Integer bookedCount;
+    @Column(name = "booked_rooms", columnDefinition = "INTEGER DEFAULT 0", nullable = false)
+    private Integer bookedRooms;
 
-    @Column(name = "total_count")
-    private Integer totalCount;
+    @Column(name = "total_rooms",nullable = false)
+    private Integer totalRooms;
+
+    @Column(name = "available_rooms",nullable = false)
+    private Integer availableRooms;
+
 
     @Column(nullable = false,precision = 10, scale = 2)
-    private BigDecimal sugerFactory;
+    private BigDecimal surgeFactor;//dynamic pricing
 
     @Column(nullable = false)
     private Boolean closed;
