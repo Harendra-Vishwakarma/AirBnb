@@ -47,7 +47,16 @@ public class InventoryServiceImpl implements InventoryService {
 
         //fetch Inventory from start and enddate
         List<Inventory> inventories = inventoryRepository.findInventoryForUpdate(room, start, end);
+
+        // ❌ Edge case: inventory missing
+        if (inventories.isEmpty()) {
+            throw new RuntimeException("Inventory not available");
+        }
         for (Inventory inventory : inventories) {
+
+            if (inv.isClosed()) {
+                throw new RuntimeException("Room closed for date: " + inv.getDate());
+            }
             if (inventory.getAvailableRooms() < roomsNeeded) {
                 throw new RuntimeException("Rooms not available for date: " + inventory.getDate());
             }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -17,29 +19,32 @@ public class Booking {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id",nullable = false)
+    @JoinColumn(name = "hotel_id", nullable = false)
     private Hotel hotel;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id",nullable = false)
+    @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "booking_status",nullable = false)
+    @Column(name = "booking_status", nullable = false)
     private BookingStatus bookingStatus;
 
     @Column(nullable = false)
-    private Integer roomsCount;
+    private Integer roomsBooked;
 
-    @Column(name = "checked_in_date",nullable = false)
-    private LocalDateTime CheckedInDate;
+    @Column(nullable = false)
+    private BigDecimal totalPrice;
 
-    @Column(name = "checked_out_date",nullable = false)
-    private LocalDateTime checkOutDate;
+    @Column(name = "checked_in_date", nullable = false)
+    private LocalDate CheckedInDate;
+
+    @Column(name = "checked_out_date", nullable = false)
+    private LocalDate checkOutDate;
 
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -48,11 +53,7 @@ public class Booking {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "booking_guest"
-    ,joinColumns = @JoinColumn(name = "booking_id"),
-    inverseJoinColumns = @JoinColumn(name="guest_id"))
+            , joinColumns = @JoinColumn(name = "booking_id"),
+            inverseJoinColumns = @JoinColumn(name = "guest_id"))
     private Set<Guest> guests;
-
-
-
-
 }
